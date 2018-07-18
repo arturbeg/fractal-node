@@ -30,16 +30,21 @@ var ChatServer = /** @class */ (function () {
         });
         this.io.on('connect', function (socket) {
             console.log('Connected client on port %s.', _this.port);
-            socket.on('message', function (m) {
-                console.log('[server](message): %s', JSON.stringify(m));
-                // add timestamp before emitting
-                var now = new Date(Date.now()).toLocaleString();
-                console.log(now);
-                m.timestamp = now; // timestamp set
-                _this.io.emit('message', m);
+            socket.on('message', function (data) {
+                console.log('[server](data): %s', JSON.stringify(data));
+                _this.io.sockets.in(data.label).emit('message', data.message);
+                // this.io.emit('message', data.message);
             });
             socket.on('disconnect', function () {
                 console.log('Client disconnected');
+            });
+            socket.on('joinRoom', function (data) {
+                console.log("Joining a room, data: ", data);
+                socket.join(data.label);
+            });
+            socket.on('leaveRoom', function (data) {
+                console.log("Leaving a room, data  ", data);
+                socket.leave(data.label);
             });
         });
     };

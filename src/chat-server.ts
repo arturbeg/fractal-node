@@ -42,18 +42,33 @@ export class ChatServer {
 
         this.io.on('connect', (socket: any) => {
             console.log('Connected client on port %s.', this.port);
-            socket.on('message', (m: Message) => {
-                console.log('[server](message): %s', JSON.stringify(m));
-                // add timestamp before emitting
-                var now = new Date(Date.now()).toLocaleString();
-                console.log(now)
-                m.timestamp = now // timestamp set
-                this.io.emit('message', m);
+            
+            socket.on('message', (data) => {
+                console.log('[server](data): %s', JSON.stringify(data))
+
+                this.io.sockets.in(data.label).emit('message', data.message)
+
+                // this.io.emit('message', data.message);
             });
 
             socket.on('disconnect', () => {
                 console.log('Client disconnected');
             });
+
+            
+
+            socket.on('joinRoom', function(data) {
+                console.log("Joining a room, data: ", data)
+                socket.join(data.label)
+            })
+
+
+            socket.on('leaveRoom', function(data) {
+                console.log("Leaving a room, data  ", data)
+                socket.leave(data.label)
+            })
+
+
         });
     }
 

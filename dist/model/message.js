@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Message = /** @class */ (function () {
-    function Message(from, content, timestamp, id, topic, likers_count) {
-        this.from = from;
-        this.content = content;
+    function Message(sender, user, text, timestamp, id, topic, likers_count) {
+        this.sender = sender;
+        this.user = user;
+        this.text = text;
         this.timestamp = timestamp;
         this.id = id;
         this.topic = topic;
