@@ -58,14 +58,21 @@ export class ChatServer {
             
 
             socket.on('joinRoom', function(data) {
+                
                 console.log("Joining a room, data: ", data)
                 socket.join(data.label)
+
+                // Report a user has joined a chatroom
             })
 
 
             socket.on('leaveRoom', function(data) {
                 console.log("Leaving a room, data  ", data)
                 socket.leave(data.label)
+
+                // Report a user has left a chatroom
+                
+                
             })
 
 
