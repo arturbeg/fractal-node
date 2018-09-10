@@ -6,7 +6,9 @@
   "author": "Artur Begyan",
   "license": "MIT",
   "scripts": {
-    "start": "node dist/index.js"
+    "build": "gulp build",
+    "start": "node dist/index.js",
+    "postinstall": "gulp default"
   },
   "dependencies": {
     "@types/express": "^4.0.39",
