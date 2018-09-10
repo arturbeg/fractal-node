@@ -7,8 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "gulp build",
-    "start": "node dist/index.js",
-    "postinstall": "gulp default"
+    "start": "node dist/index.js"
   },
   "dependencies": {
     "@types/express": "^4.0.39",
