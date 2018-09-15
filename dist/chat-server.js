@@ -45,12 +45,15 @@ var ChatServer = /** @class */ (function () {
             socket.on('joinRoom', function (data) {
                 console.log("Joining a room, data: ", data);
                 socket.join(data.label);
-                // Report a user has joined a chatroom
+                // this.io.sockets.in(data.label).emit('joinRoom', data);
+                socket.broadcast.in(data.label).emit('joinRoom', data);
             });
             socket.on('leaveRoom', function (data) {
                 console.log("Leaving a room, data  ", data);
                 socket.leave(data.label);
-                // Report a user has left a chatroom  
+                // this.io.sockets.in(data.label).emit('leaveRoom', data);
+                // socket.broadcast.emit('message', "this is a test");
+                socket.broadcast.in(data.label).emit('leaveRoom', data);
             });
         });
     };

@@ -62,20 +62,23 @@ export class ChatServer {
             });
 
 
-            socket.on('joinRoom', function(data) {
-                
+            socket.on('joinRoom', (data) => {
                 console.log("Joining a room, data: ", data)
-                socket.join(data.label)
+                socket.join(data.label);
+                // this.io.sockets.in(data.label).emit('joinRoom', data);
 
-                // Report a user has joined a chatroom
-            })
+                socket.broadcast.in(data.label).emit('joinRoom', data);
+            });
 
 
-            socket.on('leaveRoom', function(data) {
+            socket.on('leaveRoom', (data) => {
                 console.log("Leaving a room, data  ", data)
-                socket.leave(data.label)
+                socket.leave(data.label);
+                // this.io.sockets.in(data.label).emit('leaveRoom', data);
 
-                // Report a user has left a chatroom  
+                // socket.broadcast.emit('message', "this is a test");
+
+                socket.broadcast.in(data.label).emit('leaveRoom', data);
             });
 
 
