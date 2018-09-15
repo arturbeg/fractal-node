@@ -51,11 +51,16 @@ export class ChatServer {
                 // this.io.emit('message', data.message);
             });
 
+            socket.on('messageLike', (data) => {
+                console.log(`message ${data.id} was liked in ${data.topic_object.label}`);
+
+                this.io.sockets.in(data.topic_object.label).emit('messageLike', data);
+            });
+
             socket.on('disconnect', () => {
                 console.log('Client disconnected');
             });
 
-            
 
             socket.on('joinRoom', function(data) {
                 
@@ -70,10 +75,8 @@ export class ChatServer {
                 console.log("Leaving a room, data  ", data)
                 socket.leave(data.label)
 
-                // Report a user has left a chatroom
-                
-                
-            })
+                // Report a user has left a chatroom  
+            });
 
 
         });

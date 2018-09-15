@@ -35,6 +35,10 @@ var ChatServer = /** @class */ (function () {
                 _this.io.sockets.in(data.label).emit('message', data.message);
                 // this.io.emit('message', data.message);
             });
+            socket.on('messageLike', function (data) {
+                console.log("message " + data.id + " was liked in " + data.topic_object.label);
+                _this.io.sockets.in(data.topic_object.label).emit('messageLike', data);
+            });
             socket.on('disconnect', function () {
                 console.log('Client disconnected');
             });
@@ -46,7 +50,7 @@ var ChatServer = /** @class */ (function () {
             socket.on('leaveRoom', function (data) {
                 console.log("Leaving a room, data  ", data);
                 socket.leave(data.label);
-                // Report a user has left a chatroom
+                // Report a user has left a chatroom  
             });
         });
     };
