@@ -2,8 +2,6 @@ import { createServer, Server } from 'http';
 import * as express from 'express';
 import * as socketIo from 'socket.io';
 
-import { Message } from './model';
-
 export class ChatServer {
     public static readonly PORT:number = 8080;
     private app: express.Application;
@@ -42,7 +40,7 @@ export class ChatServer {
 
         this.io.on('connect', (socket: any) => {
             console.log('Connected client on port %s.', this.port);
-            
+
             socket.on('message', (data) => {
                 console.log('[server](data): %s', JSON.stringify(data))
 
@@ -58,9 +56,13 @@ export class ChatServer {
             });
 
             socket.on('disconnect', () => {
-                console.log('Client disconnected');
+                console.log("Socket disconnected..");
             });
 
+            // socket.on('connection', (data) => {
+            //     console.log(`${data.username} is now online`);
+            //     this.connectedUserUsername = data.username;
+            // })
 
             socket.on('joinRoom', (data) => {
                 console.log("Joining a room, data: ", data)

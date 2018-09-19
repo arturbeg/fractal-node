@@ -40,8 +40,12 @@ var ChatServer = /** @class */ (function () {
                 _this.io.sockets.in(data.topic_object.label).emit('messageLike', data);
             });
             socket.on('disconnect', function () {
-                console.log('Client disconnected');
+                console.log("Socket disconnected..");
             });
+            // socket.on('connection', (data) => {
+            //     console.log(`${data.username} is now online`);
+            //     this.connectedUserUsername = data.username;
+            // })
             socket.on('joinRoom', function (data) {
                 console.log("Joining a room, data: ", data);
                 socket.join(data.label);
